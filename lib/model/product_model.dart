@@ -1,41 +1,37 @@
 // To parse this JSON data, do
 //
-//     final productrModel = productrModelFromJson(jsonString);
+//     final productModel = productModelFromJson(jsonString);
 
 import 'dart:convert';
 
-ProductrModel productrModelFromJson(String str) => ProductrModel.fromJson(json.decode(str));
+List<ProductModel> productModelFromJson(String str) => List<ProductModel>.from(json.decode(str).map((x) => ProductModel.fromJson(x)));
 
-String productrModelToJson(ProductrModel data) => json.encode(data.toJson());
+String productModelToJson(List<ProductModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class ProductrModel {
-  ProductrModel({
+class ProductModel {
+  ProductModel({
+    this.userId,
     this.id,
     this.title,
-    this.price,
-    this.description,
-    this.dateTime,
+    this.completed,
   });
 
+  int? userId;
   int? id;
   String? title;
-  int? price;
-  String? description;
-  String? dateTime;
+  bool? completed;
 
-  factory ProductrModel.fromJson(Map<String, dynamic> json) => ProductrModel(
+  factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
+    userId: json["userId"],
     id: json["id"],
     title: json["title"],
-    price: json["price"],
-    description: json["description"],
-    dateTime: json["dateTime"],
+    completed: json["completed"],
   );
 
   Map<String, dynamic> toJson() => {
+    "userId": userId,
     "id": id,
     "title": title,
-    "price": price,
-    "description": description,
-    "dateTime": dateTime,
+    "completed": completed,
   };
 }
